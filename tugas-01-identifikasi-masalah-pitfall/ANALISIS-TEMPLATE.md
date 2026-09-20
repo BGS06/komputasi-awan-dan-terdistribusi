@@ -6,7 +6,7 @@
 |---|---|---|
 | [Bagas Bintang Saputro] | [103072400078] | [The Network is Realible] |
 | [Wahyu Puji Riski Purwanto] | [103072400050] | [Latency is Zero] |
-| [Andi Muh. Arief alfaizi ilham] | [103072400082] | [Single Point Of Failure karena arsitektur monolitik] |
+| [Andi Muh. Arief alfaizi ilham] | [103072400082] | [Single Point Of Failure ] |
 
 ## Pitfall 1: [the network is reliable] — ditulis oleh [Bagas Bintang Saputro]
 
@@ -28,11 +28,17 @@
 
 ---
 
-## Pitfall 3: [nama pitfall] — ditulis oleh [nama]
+## Pitfall 3: [Single Point Of Failure ] — ditulis oleh [Andi Muh Arief Alfaizi Ilham]
 
-(ulangi struktur di atas)
+**Bukti di skenario:** [satu server yang menangani semua modul (pesanan, pembayaran, notifikasi kurir) kewalahan karena semuanya berjalan di satu proses monolitik yang sama.]
 
----
+**Kenapa ini keliru:** [karena beberapa modul berada dalam 1 server yang dapat menyebabkan lag dan sistemnya mati]
+
+**Dampak ke FoodGo:** [server kemungkinan akan mengalami crash akibat terlalu banyak request yang terpaksa melakukan restart terhadap server]
+
+**Solusi desain awal:** [Melakukan pemisahan setiap modul yang menjadi layanan tepisah]
+
+**Trade-off:** [Komunikasi Antar modul menjadi lebih rumit karena harus bergantung pada jaringan internet/internal, dan merawat banyak layanan terpisah membutuhkan biaya serta usaha yang lebih besar di bandingkan satu server]
 
 ## Kesimpulan Kelompok
 
