@@ -32,13 +32,13 @@
 
 **Bukti di skenario:** [satu server yang menangani semua modul (pesanan, pembayaran, notifikasi kurir) kewalahan karena semuanya berjalan di satu proses monolitik yang sama.]
 
-**Kenapa ini keliru:** [karena beberapa modul berada dalam 1 server yang dapat menyebabkan lag dan sistemnya mati]
+**Kenapa ini keliru:** [karena semua modul berada dalam 1 server yang dapat menyebabkan lag dan sistemnya mati total]
 
-**Dampak ke FoodGo:** [server kemungkinan akan mengalami crash akibat terlalu banyak request yang terpaksa melakukan restart terhadap server]
+**Dampak ke FoodGo:** [karena semua modul berebut memori dan CPU di server yang sama, server  kemungkinan akan mengalami crash akibat terlalu banyak request yang terpaksa melakukan restart terhadap server]
 
 **Solusi desain awal:** [Melakukan pemisahan setiap modul yang menjadi layanan tepisah]
 
-**Trade-off:** [Komunikasi Antar modul menjadi lebih rumit karena harus bergantung pada jaringan internet/internal, dan merawat banyak layanan terpisah membutuhkan biaya serta usaha yang lebih besar di bandingkan satu server]
+**Trade-off:** [Komunikasi Antar modul menjadi lebih rumit karena harus bergantung pada jaringan internet/internal, dan merawat banyak layanan terpisah membutuhkan biaya serta usaha yang lebih besar di banding satu server monolitik]
 
 ## Kesimpulan Kelompok
 
