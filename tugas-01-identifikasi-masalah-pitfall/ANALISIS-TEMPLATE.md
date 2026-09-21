@@ -50,4 +50,9 @@
 
 ## Kesimpulan Kelompok
 
-[Ringkasan: jika FoodGo memperbaiki ketiga pitfall ini, apa arsitektur yang disarankan secara garis besar? Kaitkan dengan Tugas 2.]
+[Ringkasan: jika FoodGo memperbaiki ketiga pitfall ini, apa arsitektur yang disarankan secara garis besar? Kaitkan dengan Tugas 2.
+
+Kegagalan sistem FoodGo berakar dari arsitektur monolik yang digabungkan dengan optimisme berlebihan terhadap keandalan jaringan dan kecepatan respon layanan, karena semua modul berada di satu tempat (SPOF) dan saling terikat secara sinkron tanpa timeout, satu gangguan kecil pada modul pembayaran dapat memicu efek domino yang melumpuhkan seluruh sistem
+
+dan untuk memperbaiki ketiga pitfall ini secara garis besar FoodGo harus beralih dari arsitektur Monolik menjadi sistem terdistribusi berbasis layanan (Microservices / Service-Oriented Architecture). Selain itu untuk mencegah layanan saling tunggu, komunikasi antar modul harus mulai asinkron. yang dimana desain ini akan dirancang lebih detail pada tugas 2.
+]
