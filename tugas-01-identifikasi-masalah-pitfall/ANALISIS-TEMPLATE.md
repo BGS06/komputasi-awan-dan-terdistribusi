@@ -26,13 +26,13 @@
 
 **Bukti di skenario:** [Tidak ada timeout sama sekali pada pemanggilan antar service (modul pesanan memanggil modul pembayaran dan menunggu tanpa batas waktu)]
 
-**Kenapa ini keliru:** [karena komunikasi antar-service membutuhkan waktu. Respons dari suatu service tidak selalu diterima dengan cepat. Waktu respons dapat berubah tergantung kondisi jaringan, beban pada service tujuan, maupun banyaknya permintaan yang sedang diproses. Pada FoodGo, modul pesanan bergantung pada respons dari modul pembayaran. Ketika modul pembayaran membutuhkan waktu lebih lama untuk memberikan respons, modul pesanan juga harus menunggu lebih lama. Masalahnya, FoodGo tidak memiliki timeout sehingga waktu tunggu tersebut tidak memiliki batas.]
+**Kenapa ini keliru:** [Komunikasi antar-service tidak selalu berjalan dengan cepat. Saat banyak pengguna melakukan transaksi secara bersamaan, modul pembayaran bisa membutuhkan waktu lebih lama untuk memberikan respons. Karena tidak ada timeout, modul pesanan akan terus menunggu sampai mendapatkan respons.]
 
-**Dampak ke FoodGo:** [Untuk dampaknya sendiri, cukup lumayan banyak seperti: modul pembayaran mulai merespons dengan lambat, Thread yang menumpuk karena Modul pesanan memanggil modul pembayaran. sebab tidak ada timeout, thread berstatus blocking (tertahan/menunggu) dan tidak bisa digunakan untuk melayani pelanggan lain.]
+**Dampak ke FoodGo:** [Ketika modul pembayaran lambat, banyak permintaan dari modul pesanan dapat ikut tertahan. Jika jumlah permintaan terus bertambah, beban sistem juga meningkat sehingga aplikasi menjadi lambat, mengalami timeout, atau bahkan crash.]
 
-**Solusi desain awal:** [Solusi yang paling langsung untuk masalah tersebut adalah menerapkan timeout pada komunikasi antar-service. Modul pesanan diberikan batas waktu ketika menunggu respons dari modul pembayaran. Jika batas tersebut terlewati, modul pesanan tidak terus menunggu tanpa batas dan sistem dapat menjalankan mekanisme penanganan kegagalan. Solusi tersebut dapat dikombinasikan dengan circuit breaker. Jika modul pembayaran berulang kali lambat atau gagal merespons, circuit breaker dapat menghentikan sementara pengiriman permintaan baru menuju modul tersebut.]
+**Solusi desain awal:** [Menerapkan timeout agar modul pesanan memiliki batas waktu saat menunggu respons dari modul pembayaran. Jika respons tidak diterima sampai batas waktu tersebut, sistem dapat melakukan penanganan lain dan tidak terus menunggu. Selain itu, circuit breaker dapat digunakan jika modul pembayaran berulang kali mengalami masalah.]
 
-**Trade-off:** [Jika nilai timeout dibuat terlalu pendek, sebuah permintaan dapat dianggap gagal meskipun modul pembayaran sebenarnya masih memproses permintaan tersebut. Hal ini dapat menimbulkan masalah baru, terutama jika proses pembayaran ternyata berhasil setelah modul pesanan menganggap permintaan gagal. Sebaliknya, jika nilai timeout dibuat terlalu panjang, manfaatnya menjadi berkurang karena resource tetap dapat tertahan dalam waktu lama ketika service tujuan mengalami masalah.]
+**Trade-off:** [Jika timeout terlalu pendek, sistem bisa mengalami timeout padahal modul pembayaran sebenarnya masih memproses transaksi. Namun, jika terlalu panjang, permintaan tetap akan tertahan cukup lama sehingga penggunaan resource masih bisa meningkat.]
 
 ---
 
