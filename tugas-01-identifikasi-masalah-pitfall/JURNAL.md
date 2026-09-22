@@ -2,11 +2,14 @@
 
 > Isi jurnal ini selama proses diskusi berlangsung, bukan ditulis ulang rapi di akhir. Tulis dengan gaya bebas — poin diskusi, kebuntuan, perubahan pikiran.
 
-## [Tanggal diskusi 1]
+## [20/09/2026] [Diskusi secara langsung (Offline)]
 - Peserta: [Bagas Bintang Saputro] | [103072400078]
            [Wahyu Puji Riski Purwanto] | [103072400050]
            [Andi Muh. Arief alfaizi ilham] | [103072400082]
-- Poin diskusi: ...
+- Poin diskusi: 1. Pada saat diskusi kami menemukan dan sepakati bahwa memakai 2 pitfall yang cocok yaitu "The Network Is Realible" dan "Latency Is Zero"
+2. "The Network Is Realible" (Dippiliha dan disarankan oleh Bintang) karena pada sekenario secara eksplisit terdapat asumsi network is always realible, no need for retry.
+3. "Latency Is Zero" (dipilih dan disarankan oleh wahyu) dipertimbangkan karena modul pesanan memanggil modul pembayaran tanpa mekanisme timeout sehingga sistem dapat menggantung menunggu tanpa batas waktu.
+4. Selanjutnya kami menemukan poin di masalah desain sistem terdistribusi, yaitu Single Poin of Failure karena salah satu gejalanya mengatakan "berjalan di satu monolitik yang sama" (dipilih dan disarankan oleh arief)
 - Perbedaan pendapat (jika ada): ...
 
 ## [Tanggal diskusi 2]
