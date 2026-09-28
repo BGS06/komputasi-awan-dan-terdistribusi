@@ -24,32 +24,26 @@ Publish-Subscribe (Asinkron): Digunakan untuk mendelegasikan tugas ke Service Re
 2. ## Diagram Arsitektur FoodGo
 
 ```mermaid
-flowchart TD
-    U["Pelanggan / Aplikasi FoodGo"]
+flowchart LR
 
+    U["Pelanggan<br/>Aplikasi FoodGo"]
     K["Service Katalog Resto<br/>Daftar resto, menu, harga"]
     O["Service Pesanan<br/>Membuat & mengelola pesanan"]
-    P["Service Pembayaran<br/>Memproses & memvalidasi pembayaran"]
-
+    P["Service Pembayaran<br/>Memproses pembayaran"]
     MB["Message Broker<br/>Topic: OrderPaid"]
-
     R["Service Resto<br/>Menerima pesanan masuk"]
     C["Service Kurir / Notifikasi<br/>Mencari kurir & mengirim notifikasi"]
 
-    U -->|"Request menu<br/>Sinkron"| K
-    K -->|"Response menu<br/>Sinkron"| U
+    U -->|"Lihat menu<br/>(Sinkron)"| K
+    U -->|"Buat pesanan<br/>(Sinkron)"| O
 
-    U -->|"Buat pesanan<br/>HTTP Request - Sinkron"| O
+    O -->|"Proses pembayaran<br/>(Sinkron)"| P
+    P -->|"Status pembayaran<br/>(Sinkron)"| O
 
-    O -->|"Request pembayaran<br/>Sinkron"| P
-    P -->|"Status pembayaran<br/>Response - Sinkron"| O
+    O -.->|"Publish OrderPaid<br/>(Asinkron)"| MB
 
-    O -.->|"Publish event: OrderPaid<br/>Asinkron"| MB
-
-    MB -.->|"Subscribe: OrderPaid<br/>Asinkron"| R
-    MB -.->|"Subscribe: OrderPaid<br/>Asinkron"| C
-
-    O -->|"Pesanan berhasil / sedang diproses"| U
+    MB -.->|"OrderPaid"| R
+    MB -.->|"OrderPaid"| C
 ```
 
 
