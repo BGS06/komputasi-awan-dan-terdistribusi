@@ -15,28 +15,11 @@ Melanjutkan Tugas 1: FoodGo butuh sistem yang **decoupled** agar tim kurir dan t
 
 
 ## Jawaban untuk soal yang berada di README.md
-1.
+1.kami memilih kombinasi karena sistem FoodGo memiliki 2 karakteristik untuk  kebutuhan berbeda. Transaksi finansial (Pesanan dan Pembayaran) membutuhkan konsistensi data dan kepastian respons secara langsung (real time), tetapi di di sisi lain proses pasca-pembayaran dapat berjalan di latar belakang tanpa mengharuskan pelanggan menunggu komputasinya selesai.
 
+SOA(singkron):  Di gunakan pada Service pesanan dan Service Pembayaran. Pelanggan membutuhkan kepastian instan (real-time) apakah pembayaran mereka berhasil atau ditolak. Komunikasi ini harus sinkron.Publish-Subscribe 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Publish-Subscribe (Asinkron): Digunakan untuk mendelegasikan tugas ke Service Resto dan Service Kurir. Setelah pembayaran berhasil, aplikasi pesanan tidak perlu menunggu kurir ditemukan untuk membalas ke pengguna. Pesanan cukup "mengumumkan" (publish event) bahwa ada pesanan masuk, lalu modul lain akan bereaksi secara mandiri.
 
 2.
 
@@ -68,7 +51,7 @@ Melanjutkan Tugas 1: FoodGo butuh sistem yang **decoupled** agar tim kurir dan t
 
 3. Penjelasan Alur Skenario End-to-End
 Skenario : Pelanggan membuat pesanan makanan hingga pesanan diterima oleh pihak Resto dan Kurir ditugaskan.
-a. Pembuatan Pesanan (Sinkron): Pelanggan menekan tombol "Pesan" di aplikasi, aplikasi mengirim HTTP Request ke Service Pesanan.
+a. Pembuatan Pesanan (Sinkron): Pelanggan menekan tombol "Pesan" di aplikasi, maka aplikasi mengirim HTTP Request ke Service Pesanan.
 b. Validasi Pembayaran (Sinkron): Service Pesanan melakukan pemanggilan request-response ke Service Pembayaran untuk memvalidasi saldo pelanggan. Service Pesanan akan "Menunggu" dengan timeout hingga Service Pembayaran membalas sukses.
 c. Penerbitan Event (Asinkron): Setelah pembayaran terkonfirmasi, Service Pesanan mengirim pesan berbentuk event pertama OrderPaid kedalam message Broker. Pada detik ini juga, Service Pesanan langsung membalas ke HP pelanggan: "Pesanan berhasil, sedang diproses!" tanpa perlu menunggu respon kurir.
 d. Berlangganan & Reaksi (Asinkron): Service Resto dan Service Kurir yang sejak awal sudah "berlangganan" (Subscribe) ke topik OrderPaid di Message Broker akan otomatis menerima pesan tersebut secara paralel.
