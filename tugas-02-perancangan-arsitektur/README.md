@@ -25,6 +25,7 @@ Publish-Subscribe (Asinkron): Digunakan untuk mendelegasikan tugas ke Service Re
 
 ```mermaid
 flowchart LR
+
     U["Pelanggan<br/>Aplikasi FoodGo"]
     K["Service Katalog Resto<br/>Daftar resto, menu, harga"]
     O["Service Pesanan<br/>Membuat & mengelola pesanan"]
@@ -34,12 +35,19 @@ flowchart LR
     C["Service Kurir / Notifikasi<br/>Mencari kurir & mengirim notifikasi"]
 
     U -->|"1. Lihat menu<br/>(Sinkron)"| K
+
     U -->|"2. Buat pesanan<br/>(Sinkron)"| O
+
     O -->|"3. Proses pembayaran<br/>(Sinkron)"| P
+
     P -->|"4. Status pembayaran<br/>(Sinkron)"| O
-    O -->|"5. Response: Pesanan Lunas<br/>(Sinkron)"| U
-    O -.->|"6. Publish OrderPaid<br/>(Asinkron)"| MB
+
+    O -.->|"5. Publish OrderPaid<br/>(Asinkron)"| MB
+
+    O -->|"6. Response: Pesanan berhasil<br/>(Sinkron)"| U
+
     MB -.->|"7a. OrderPaid<br/>(Asinkron)"| R
+
     MB -.->|"7b. OrderPaid<br/>(Asinkron)"| C
 ```
 
