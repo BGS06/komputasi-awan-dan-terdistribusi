@@ -66,56 +66,27 @@ Melanjutkan Tugas 1: FoodGo butuh sistem yang **decoupled** agar tim kurir dan t
 
 
 
-3.
+3. Penjelasan Alur Skenario End-to-End
+Skenario : Pelanggan membuat pesanan makanan hingga pesanan diterima oleh pihak Resto dan Kurir ditugaskan.
+a. Pembuatan Pesanan (Sinkron): Pelanggan menekan tombol "Pesan" di aplikasi, aplikasi mengirim HTTP Request ke Service Pesanan.
+b. Validasi Pembayaran (Sinkron): Service Pesanan melakukan pemanggilan request-response ke Service Pembayaran untuk memvalidasi saldo pelanggan. Service Pesanan akan "Menunggu" dengan timeout hingga Service Pembayaran membalas sukses.
+c. Penerbitan Event (Asinkron): Setelah pembayaran terkonfirmasi, Service Pesanan mengirim pesan berbentuk event pertama OrderPaid kedalam message Broker. Pada detik ini juga, Service Pesanan langsung membalas ke HP pelanggan: "Pesanan berhasil, sedang diproses!" tanpa perlu menunggu respon kurir.
+d. Berlangganan & Reaksi (Asinkron): Service Resto dan Service Kurir yang sejak awal sudah "berlangganan" (Subscribe) ke topik OrderPaid di Message Broker akan otomatis menerima pesan tersebut secara paralel.
+e. Tindak lanjut independen:
+- Service Resto memperbarui basis data dan meneruskan notifikasi pesanan masuk ke tablet/aplikasi yang ada di dapur resto.
+-Service Kurir memulai algoritma pencarian lokasi (geospacial) untuk menemukan kurir terdekat, lalu mengirim push notification ke aplikasi kurir.
 
+4. Analilis masalah Coupling & Trade-off
+Mengapa desain ini mengatasi masalah coupling dari tugas 1:
+Pada desain monolitik pada tugas 1, jika modul kurir macet atau sedang di deploy ulang, modul pesanan ikut error karena mereka saling menunggu (tighly coupled). Dengan gaya Publish-Subscribe, sistem menjadi terdekopel (decoupled). Jika Service Kurir kebetulan sedang down, pelanggan tetap bisa melakukan pesanan dan bayar dengan lancar. Event OrderPaid tidak akan hilang, melainkan aman mengantre di dalam Message Broker. Begitu Service Kurir menyala kembali ia akan langsung mengambil antrean event tersebut dan memprosesnya (Fault Tolerance / Loose Coupling).
 
+Trade-off
 
+1. Kompleksitas Debugging & Tracing: Karena alurnya menggunakan Pub_Sub (tidak linear dan berjalan di latar belakang), saat pelanggan komplain "Resto belum terima pesanan saya", developer kesulitan melacak error-nya. Berbeda dengan monolitik, developer kini harus mengecek log di Service Pesanan, lalu mengecek Message Broker, lalu mengecek log di Service Resto. Butuh sistem Centralized Logging tambahan untuk mengatasinya.
 
+2. Kompleksitas Infrastruktur (Biaya): Menjalankannya dan merawat komponen tambahan seperti Message Broker membutuhkan biaya ekstra untuk server, serta keahlian khusus bagi tim IT (DevOps) dibandingkan sekedar merawat satu server monolitik besar.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-4.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+3. Eventual Consistency: Data antar layanan tidak update secara serempak di detik yang sama, melainkan tertunda sekian milidetik/detik (sistem konsisten secara perlahan), yang mana butuh penanganan error khusus jika proses asinkron gagal di tengah jalan.
 
 
 ## Cara Membuat Diagram (Gratis, Cukup Laptop)
