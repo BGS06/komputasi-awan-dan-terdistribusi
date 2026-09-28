@@ -21,7 +21,36 @@ SOA(singkron):  Di gunakan pada Service pesanan dan Service Pembayaran. Pelangga
 
 Publish-Subscribe (Asinkron): Digunakan untuk mendelegasikan tugas ke Service Resto dan Service Kurir. Setelah pembayaran berhasil, aplikasi pesanan tidak perlu menunggu kurir ditemukan untuk membalas ke pengguna. Pesanan cukup "mengumumkan" (publish event) bahwa ada pesanan masuk, lalu modul lain akan bereaksi secara mandiri.
 
-2.
+2. ## Diagram Arsitektur FoodGo
+
+```mermaid
+flowchart TD
+    U["Pelanggan / Aplikasi FoodGo"]
+
+    K["Service Katalog Resto<br/>Daftar resto, menu, harga"]
+    O["Service Pesanan<br/>Membuat & mengelola pesanan"]
+    P["Service Pembayaran<br/>Memproses & memvalidasi pembayaran"]
+
+    MB["Message Broker<br/>Topic: OrderPaid"]
+
+    R["Service Resto<br/>Menerima pesanan masuk"]
+    C["Service Kurir / Notifikasi<br/>Mencari kurir & mengirim notifikasi"]
+
+    U -->|"Request menu<br/>Sinkron"| K
+    K -->|"Response menu<br/>Sinkron"| U
+
+    U -->|"Buat pesanan<br/>HTTP Request - Sinkron"| O
+
+    O -->|"Request pembayaran<br/>Sinkron"| P
+    P -->|"Status pembayaran<br/>Response - Sinkron"| O
+
+    O -.->|"Publish event: OrderPaid<br/>Asinkron"| MB
+
+    MB -.->|"Subscribe: OrderPaid<br/>Asinkron"| R
+    MB -.->|"Subscribe: OrderPaid<br/>Asinkron"| C
+
+    O -->|"Pesanan berhasil / sedang diproses"| U
+```
 
 
 
