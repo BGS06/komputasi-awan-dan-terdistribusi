@@ -16,6 +16,16 @@ Server FoodGo boros sumber daya karena setiap permintaan pesanan masuk diproses 
 3. Paketkan program ke dalam **Docker container** (`Dockerfile` disediakan skeleton-nya, lengkapi bagian yang kosong).
 4. Jalankan container di laptop, buktikan program tetap berjalan benar di dalam container (screenshot/video di `bukti/`).
 
+
+## JAWABAN UNTUK SOAL README
+
+1.Program membuat satu `threading.Thread` untuk setiap pesanan . Semua thread dimulai sebelum program melakukan `join()`.`time.sleep()` dengan durasi acak mensimulasikan waktu menunggu layanan pembayaran. Program menjalankan versi tanpa lock dahulu, lalu versi dengan lock. Counter dan data hasil direset pada setiap versi
+
+2.
+
+
+
+
 ## Skeleton yang Disediakan
 
 - `src/order_simulator.py` — kerangka program dengan `# TODO` di bagian logika inti (worker function, penggunaan lock, agregasi hasil). **Kalian wajib mengisi bagian TODO sendiri** — ini bagian penilaian utama.
