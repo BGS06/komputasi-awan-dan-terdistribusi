@@ -21,9 +21,21 @@ Server FoodGo boros sumber daya karena setiap permintaan pesanan masuk diproses 
 
 1.Program membuat satu `threading.Thread` untuk setiap pesanan . Semua thread dimulai sebelum program melakukan `join()`.`time.sleep()` dengan durasi acak mensimulasikan waktu menunggu layanan pembayaran. Program menjalankan versi tanpa lock dahulu, lalu versi dengan lock. Counter dan data hasil direset pada setiap versi
 
-2.
+2. Operasi penambahan counter terdiri dari membaca, menambah, dan menulis nilai. Dua thread bisa membaca nilai 0, kemudian masing-masing menulis 1. Akibatnya, dua pesanan selesai tetapi counter hanya bertambah sekali (lost update).
 
+Versi tanpa lock memakai `Barrier` setelah membaca counter. Barrier sengaja
+menunggu sampai seluruh thread membaca nilai awal yang sama, lalu melepas mereka
+untuk menulis. Dengan lebih dari satu pesanan, counter akhirnya 1. Ini demonstrasi
+interleaving yang sengaja diatur; tanpa pengaturan ini, hasil race condition dapat
+berubah atau bahkan tampak benar pada suatu eksekusi. Barrier bukan mutex dan
+tidak melindungi operasi read-modify-write. GIL bukan pengganti sinkronisasi ini.
 
+Versi perbaikan memakai `with lock:` untuk melindungi seluruh langkah baca,
+tambah, dan tulis. Thread lain menunggu sampai lock dilepas. Barrier demonstrasi
+dihapus dari jalur ini; menunggu semua thread di dalam lock akan menyebabkan
+kebuntuan karena thread lain tidak bisa masuk. Simulasi menunggu layanan tetap
+di luar critical section. Jeda 0,001 detik di antara baca/tulis hanya untuk demo;
+pada aplikasi nyata critical section harus sesingkat mungkin.
 
 
 ## Skeleton yang Disediakan
