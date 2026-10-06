@@ -9,7 +9,7 @@ sebanyak 99 update hilang.
 - Hasil `processed_count` setelah perbaikan: ...
 
 ## Kendala Docker
-- Error yang ditemui saat `docker build`/`docker run` dan cara memperbaikinya: ...
+- Error disaat instalasi docker desktop (human error), namun saat mencoba build dan run, tidak ada kendala sama sekali
 
 ## Log Penggunaan AI (Level 2)
 
