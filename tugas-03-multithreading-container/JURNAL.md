@@ -17,4 +17,6 @@ Setelah menggunakan threading.Lock(), nilai processed_count menjadi 100, sesuai 
 
 | Tanggal | Tool AI | Prompt yang diberikan | Ringkasan saran/ide AI | Bagaimana diolah jadi tulisan/kode sendiri |
 |---|---|---|---|---|
+| 6 Oktober 2026 | ChatGPT | Jelaskan langkah pengerjaan untuk pemula. | Menjelaskan pengujian Python, Docker, penyimpanan bukti, dan push ke GitHub. | Panduan digunakan untuk menjalankan program dan menyiapkan bukti. |
+| 6 Oktober 2026 | ChatGPT | Mengapa hasil tanpa lock berbeda setiap run? | Menjelaskan penjadwalan thread dan pembaruan counter yang saling tertimpa. | Penjelasan digunakan untuk memahami hasil pengujian. |
 | ... | ... | ... | ... | ... |
