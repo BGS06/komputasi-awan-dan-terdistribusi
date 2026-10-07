@@ -6,7 +6,7 @@ Setelah seluruh thread membaca nilai 0, semuanya menulis nilai 1. Hasil pengujia
 lokal 100 pesanan menunjukkan 100 worker selesai tetapi counter hanya 1;
 sebanyak 99 update hilang.
 ## Percobaan dengan Lock
-- Hasil `processed_count` setelah perbaikan: ...
+Setelah menggunakan threading.Lock(), nilai processed_count menjadi 100, sesuai dengan jumlah pesanan. Lock membuat thread bergantian memperbarui counter sehingga tidak saling menimpa hasil penambahan. Pada percobaan di dalam Docker, tidak ada penambahan counter yang hilang dan hasilnya sesuai harapan.
 
 ## Kendala Docker
 - Error disaat instalasi docker desktop (human error), namun saat mencoba build dan run, tidak ada kendala sama sekali
