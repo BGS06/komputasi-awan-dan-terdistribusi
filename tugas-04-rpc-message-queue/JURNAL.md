@@ -16,4 +16,5 @@
 
 | Tanggal | Tool AI | Prompt yang diberikan | Ringkasan saran/ide AI | Bagaimana diolah jadi tulisan/kode sendiri |
 |---|---|---|---|---|
+| 12 Oktober 2026 | ChatGPT | Kenapa RPC lebih mudah digunakan daripada Message Queue / MOM (Asinkron)? Jelaskan secara eksplisit. | RPC pada tugas ini lebih sederhana karena hanya membutuhkan server dan client serta memakai standard library Python. RabbitMQ membutuhkan broker, dependency tambahan, dan pengaturan antrean. Pemilihan tetap harus sesuai kebutuhan sinkron atau asinkron. | Digunakan sebagai bahan pemahaman untuk menyusun penjelasan sendiri tentang kemudahan penggunaan dan alasan memilih RPC pada FoodGo. |
 | ... | ... | ... | ... | ... |
