@@ -8,8 +8,11 @@
 - Log/observasi: Setelah kelima node dijalankan, node 5 terpilih sebagai leader karena memiliki ID paling tinggi. Node 5 mengirim pesan COORDINATOR kepada node lainnya. Node 1, 2, 3, dan 4 kemudian menampilkan bahwa leader saat ini adalah node 5.
 
 ## Skenario 2: Leader dimatikan
-- Leader baru yang terpilih: ...
-- Berapa lama waktu sampai leader baru terdeteksi: ...
+- Leader baru yang terpilih: 4
+- Berapa lama waktu sampai leader baru terdeteksi:
+1. Waktu sampai leader baru terdeteksi, proses pemulihan ulang mulai terlihat sekitar 18:45:07. Waktu pastinya hingga seluruh node mengenali leader baru belum dapat dipastikan dari screenshot.
+
+2. Log/Observasi: Setelah node 5 dihentikan, node 4 mendeteksi bahwa leader tidak merespon dan memulai pemilihan ulang. Node 4 kemudian mengirim pesan ELECTION dan menerima respon dari node lain. Karena node 4 merupakan node dengan ID tertinggi yang masih aktif, node 4 terpilih sebagai leader baru dan mengirim pesan COORDINATOR kepada node lain.
 
 ## Log Penggunaan AI (Level 2)
 
