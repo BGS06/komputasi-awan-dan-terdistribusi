@@ -9,6 +9,7 @@ Terjadi konflik urutan waktu pada pesanan FoodGo (dua server mencatat urutan pes
 ## Jawaban readme.md
 - Karena jam antar-server tidak sinkron, urutan pesanan yang masuk bersamaan bisa tertukar atau diproses ganda. Satu Node Leader diperlukan sebagai pengatur tunggal antrean pusat agar urutan pesanan selalu konsisten.
 - Supaya proses pemilihan leader lebih cepat simpel. Karena tidak ada node dengan ID lebih besar yang membalasnya, node ber-ID tertinggi bisa langsung jadi leader tanpa perlu nunggu persetujuan node lain.
+- Pada Bully Algorithm, jika node ber-ID terkecil yang pertama mendeteksi leader mati, pesan election dikirim berantai ke semua node di atasnya sehingga jaringan jadi penuh oleh lalu lintas pesan pemilihan. Raft lebih efisien karena kandidat cukup meminta suara ke node lain tanpa pesan berantai dan menjadi leader jika mendapat suara mayoritas.
 
 ## Tugas Kelompok
 
