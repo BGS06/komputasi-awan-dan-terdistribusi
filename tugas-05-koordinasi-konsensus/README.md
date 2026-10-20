@@ -6,9 +6,12 @@
 
 Terjadi konflik urutan waktu pada pesanan FoodGo (dua server mencatat urutan pesanan berbeda karena jam tidak sinkron), dan sistem membutuhkan satu **"Node Leader"** untuk mengelola antrean pesanan pusat agar tidak terjadi konflik pemrosesan ganda.
 
+## Jawaban readme.md
+- Karena jam antar-server tidak sinkron, urutan pesanan yang masuk bersamaan bisa tertukar atau diproses ganda. Satu Node Leader diperlukan sebagai pengatur tunggal antrean pusat agar urutan pesanan selalu konsisten.
+
 ## Tugas Kelompok
 
-Implementasikan simulasi **Bully Algorithm** untuk memilih leader di antara **5 node virtual** yang berjalan sebagai 5 proses Python terpisah di laptop yang sama (tiap node = satu proses di port berbeda, komunikasi lewat TCP socket di `localhost`).
+-Karena jam antar-server tidak sinkron, urutan pesanan yang masuk bersamaan bisa tertukar atau diproses ganda. Satu Node Leader diperlukan sebagai pengatur tunggal antrean pusat agar urutan pesanan selalu konsisten.
 
 Skeleton yang disediakan (`src/node.py`) sudah menangani bagian **infrastruktur jaringan** (membuka socket, menerima & mengirim pesan antar node) — bagian **algoritma Bully sendiri sengaja dikosongkan** (`# TODO`), karena itu inti pembelajaran tugas ini.
 
