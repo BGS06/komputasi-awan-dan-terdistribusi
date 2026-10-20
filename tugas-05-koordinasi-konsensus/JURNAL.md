@@ -17,4 +17,5 @@
 
 | Tanggal | Tool AI | Prompt yang diberikan | Ringkasan saran/ide AI | Bagaimana diolah jadi tulisan/kode sendiri |
 |---|---|---|---|---|
+| 20 Oktober 2026 | ChatGPT | Berdasarkan tugas komputasi saya, jelaskan apa itu Bully Algorithm, bagaimana sistem dan cara kerjanya, serta berikan contoh yang mudah dipahami pemula. | AI menjelaskan bahwa node aktif dengan ID tertinggi dipilih sebagai leader. Contoh yang diberikan adalah pemilihan ketua kelompok dan pergantian leader dari Node 5 ke Node 4 ketika Node 5 mati. AI juga menjelaskan fungsi pesan ELECTION, OK, dan COORDINATOR sebagai gambaran alur pemilihan. | Penjelasan digunakan sebagai bahan pemahaman awal. Saya berencana menjadikannya panduan untuk melengkapi logika algoritma dan mengamati pergantian leader saat pengujian lima node. |
 | ... | ... | ... | ... | ... |
