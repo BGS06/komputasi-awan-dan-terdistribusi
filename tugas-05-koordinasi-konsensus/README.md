@@ -8,6 +8,7 @@ Terjadi konflik urutan waktu pada pesanan FoodGo (dua server mencatat urutan pes
 
 ## Jawaban readme.md
 - Karena jam antar-server tidak sinkron, urutan pesanan yang masuk bersamaan bisa tertukar atau diproses ganda. Satu Node Leader diperlukan sebagai pengatur tunggal antrean pusat agar urutan pesanan selalu konsisten.
+- Supaya proses pemilihan leader lebih cepat simpel. Karena tidak ada node dengan ID lebih besar yang membalasnya, node ber-ID tertinggi bisa langsung jadi leader tanpa perlu nunggu persetujuan node lain.
 
 ## Tugas Kelompok
 
