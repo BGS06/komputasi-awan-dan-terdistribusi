@@ -67,16 +67,31 @@ graph TD
     N123 --> N136((Node 136<br>surabaya-1))
     N136 --> N177((Node 177<br>jakarta-1))
     N177 --> N40
-    
+
     K28[kurir-002<br>Hash: 28] -.->|Disimpan di| N40
     K50[kurir-001<br>Hash: 50] -.->|Disimpan di| N102
     K132[kurir-003<br>Hash: 132] -.->|Disimpan di| N136
 ```
 
-3. lookup("kurir-001")
-   
-Proses Hashing: Program menghitung hash_id("kurir-001") yang menghasilkan nilai target hash sebesar 50.
+3.Apa yang terjadi saat node keluar?
 
+
+Ketika sebuah node keluar, **semua key di rentang tanggung jawabnya diambil alih oleh
+successor-nya**, yaitu node berikutnya searah ring. Rentang node lain tetap sama.
+
+Di simulasi kami, `node-jakarta-1` (ID 177) keluar dari ring. Rentang tanggung jawabnya
+adalah (136, 177] dan successor-nya adalah Node 40 (karena ring berputar balik ke
+awal / *wrap-around*). Setelah itu, ring tinggal 4 node: 40, 102, 123, dan 136.
+Output programnya:
+
+![Output program skenario join dan leave](bukti/Bukti%20Penamaan.png)
+
+
+dari [LEAVE] sampai kurir-002 -> 192.168.1.11
+Log di atas menunjukkan node penanggung jawab tiap kurir setelah ring berubah. Karena
+hash ketiga kurir (28, 50, 132) ada di luar rentang (136, 177], mapping mereka tetap
+berada di node yang sama seperti sebelumnya. Hasil lookup juga tetap sama, jadi data
+tidak hilang dan sistem tetap jalan tanpa server pusat.
 
 ## Struktur Submission
 
