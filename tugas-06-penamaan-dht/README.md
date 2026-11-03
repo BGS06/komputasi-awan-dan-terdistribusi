@@ -72,8 +72,8 @@ graph TD
     K50[kurir-001<br>Hash: 50] -.->|Disimpan di| N102
     K132[kurir-003<br>Hash: 132] -.->|Disimpan di| N136
 
-'''
-
+3. lookup("kurir-001")
+Proses Hashing: Program menghitung hash_id("kurir-001") yang menghasilkan nilai target hash sebesar 50.
 
 
 ## Struktur Submission
