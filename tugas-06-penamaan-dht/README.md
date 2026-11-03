@@ -87,11 +87,7 @@ Output programnya:
 ![Output program skenario join dan leave](bukti/Bukti%20Penamaan.png)
 
 
-dari [LEAVE] sampai kurir-002 -> 192.168.1.11
-Log di atas menunjukkan node penanggung jawab tiap kurir setelah ring berubah. Karena
-hash ketiga kurir (28, 50, 132) ada di luar rentang (136, 177], mapping mereka tetap
-berada di node yang sama seperti sebelumnya. Hasil lookup juga tetap sama, jadi data
-tidak hilang dan sistem tetap jalan tanpa server pusat.
+Perlu dicatat, log program mencetak ketiga kurir sebagai "diambil alih" saat node 177 keluar. Padahal hash ketiga kurir (28, 50, 132) berada di luar rentang tanggung jawab node 177, yaitu (136, 177], sehingga secara teori tidak ada key yang berpindah. Ketiganya sudah disimpan di node 40, 102, dan 136 sebelum node 177 keluar. Hasil lookup tetap sama, jadi data tidak hilang dan sistem tetap jalan tanpa server pusat. Ketidaksesuaian log ini juga sudah kami catat di JURNAL.md sebagai bagian yang perlu diperbaiki.
 
 ## Struktur Submission
 
